@@ -1,0 +1,273 @@
+<html>
+<head>
+
+<title>Calculadora</title>
+<meta charset="utf-8">
+
+<script type="text/javascript">
+
+let numero1 = 0;
+let operacion = "";
+
+const vaciar = () => {
+    document.getElementById("n1").value = "";
+};
+
+const cuadrado = () => {
+    if (validate() === false) {
+        return;
+    }
+    let numero = Number(document.getElementById("n1").value);
+    document.getElementById("n1").value = numero * numero;
+    fill_info();
+};
+
+const inverso = () => {
+    if (validate() === false) {
+        return;
+    }
+    let numero = Number(document.getElementById("n1").value);
+    if (numero === 0) {
+        document.getElementById("info").innerHTML = "Error: no se puede dividir entre 0";
+        return;
+    }
+    document.getElementById("n1").value = 1 / numero;
+    fill_info();
+};
+
+const validate = () => {
+    let texto = document.getElementById("n1").value;
+
+    if (texto === "") {
+        document.getElementById("info").innerHTML = "Error: campo vacío";
+        return false;
+    }
+
+    let numero = Number(texto);
+
+    if (numero !== numero) {
+        document.getElementById("info").innerHTML = "Error: número no válido";
+        return false;
+    }
+
+    return true;
+};
+
+const fill_info = () => {
+    let resultado = Number(document.getElementById("n1").value);
+
+    if (resultado < 100) {
+        document.getElementById("info").innerHTML = Info: El resultado ${resultado} es menor que 100;
+    } else if (resultado <= 200) {
+        document.getElementById("info").innerHTML = Info: El resultado ${resultado} está entre 100 y 200;
+    } else {
+        document.getElementById("info").innerHTML = Info: El resultado ${resultado} es mayor que 200;
+    }
+};
+
+const mod = () => {
+
+    if (validate() === false) {
+        return;
+    }
+
+    let numero = Number(document.getElementById("n1").value);
+
+    if (numero < 0) {
+        numero = -numero;
+    }
+
+    document.getElementById("n1").value = numero;
+
+    fill_info();
+};
+
+const fact = () => {
+
+    if (validate() === false) {
+        return;
+    }
+
+    let numero = Number(document.getElementById("n1").value);
+
+    if (numero < 0 || numero % 1 !== 0) {
+        document.getElementById("info").innerHTML =
+            "Error: el factorial necesita un número entero positivo";
+        return;
+    }
+
+    let resultado = 1;
+
+    for (let i = 1; i <= numero; i++) {
+        resultado = resultado * i;
+    }
+
+    document.getElementById("n1").value = resultado;
+
+    fill_info();
+};
+
+const addition = () => {
+
+    if (validate() === false) {
+        return;
+    }
+
+    numero1 = Number(document.getElementById("n1").value);
+    operacion = "+";
+    document.getElementById("n1").value = "";
+};
+
+const multiplication = () => {
+
+    if (validate() === false) {
+        return;
+    }
+
+    numero1 = Number(document.getElementById("n1").value);
+    operacion = "*";
+    document.getElementById("n1").value = "";
+};
+
+const eq = () => {
+
+    if (validate() === false) {
+        return;
+    }
+
+    let numero2 = Number(document.getElementById("n1").value);
+    let resultado;
+
+    if (operacion === "+") {
+        resultado = numero1 + numero2;
+    } else if (operacion === "*") {
+        resultado = numero1 * numero2;
+    } else {
+        document.getElementById("info").innerHTML =
+            "Error: no se ha seleccionado una operación";
+        return;
+    }
+
+    document.getElementById("n1").value = resultado;
+    operacion = "";
+
+    fill_info();
+};
+
+const validarCSV = () => {
+
+    let texto = document.getElementById("n1").value;
+
+    if (texto === "") {
+        document.getElementById("info").innerHTML =
+            "Error: la lista está vacía";
+        return false;
+    }
+
+    let valores = texto.split(",");
+
+    for (let i = 0; i < valores.length; i++) {
+
+        if (valores[i] === "") {
+            document.getElementById("info").innerHTML =
+                "Error: la lista CSV no es válida";
+            return false;
+        }
+
+        let numero = Number(valores[i]);
+
+        if (numero !== numero) {
+            document.getElementById("info").innerHTML =
+                "Error: la lista CSV contiene un valor no válido";
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const sum = () => {
+
+    if (validarCSV() === false) {
+        return;
+    }
+
+    let valores = document.getElementById("n1").value.split(",");
+    let total = 0;
+
+    for (let i = 0; i < valores.length; i++) {
+        total = total + Number(valores[i]);
+    }
+
+    document.getElementById("n1").value = total;
+
+    fill_info();
+};
+
+const sort = () => {
+
+    if (validarCSV() === false) {
+        return;
+    }
+
+    let valores = document.getElementById("n1").value.split(",");
+
+    valores.sort((a, b) => Number(a) - Number(b));
+
+    document.getElementById("n1").value = valores.join(",");
+
+    document.getElementById("info").innerHTML =
+        "Info: Lista ordenada";
+};
+
+const reverse = () => {
+
+    if (validarCSV() === false) {
+        return;}
+    let valores = document.getElementById("n1").value.split(",");
+    valores.reverse();
+    document.getElementById("n1").value = valores.join(",");
+
+    document.getElementById("info").innerHTML =
+        "Info: Lista invertida";
+};
+
+const removelast = () => {
+
+    if (validarCSV() === false) {
+        return;}
+    let valores = document.getElementById("n1").value.split(",");
+
+    valores.pop();
+
+    document.getElementById("n1").value = valores.join(",");
+
+    document.getElementById("info").innerHTML =
+        "Info: Se ha eliminado el último valor";
+};
+
+</script>
+</head>
+<body>
+<h1>Calculadora</h1>
+
+Número:
+<input type="text" id="n1" onclick="vaciar()">
+
+<h2 id="info" class="big" title="Información sobre el número">
+    Información sobre el número
+</h2>
+
+<button onclick="cuadrado()">x<sup>2</sup></button>
+<button onclick="inverso()"> 1/x </button>
+<button id="modulo" onclick="mod()">|x|</button>
+<button id="factorial" onclick="fact()">x!</button>
+<button onclick="addition()">+</button>
+<button onclick="multiplication()">x</button>
+<button onclick="eq()">=</button>
+<button onclick="sum()">Suma</button>
+<button onclick="sort()">Ordena</button>
+<button onclick="reverse()">Invierte</button>
+<button onclick="removelast()">Elimina último</button>
+</body>
+</html>
