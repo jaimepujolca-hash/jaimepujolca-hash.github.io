@@ -57,11 +57,11 @@ const fill_info = () => {
     let resultado = Number(document.getElementById("n1").value);
 
     if (resultado < 100) {
-        document.getElementById("info").innerHTML = Info: El resultado ${resultado} es menor que 100;
+        document.getElementById("info").innerHTML =` Info: El resultado ${resultado} es menor que 100`;
     } else if (resultado <= 200) {
-        document.getElementById("info").innerHTML = Info: El resultado ${resultado} está entre 100 y 200;
+        document.getElementById("info").innerHTML = `Info: El resultado ${resultado} está entre 100 y 200`;
     } else {
-        document.getElementById("info").innerHTML = Info: El resultado ${resultado} es mayor que 200;
+        document.getElementById("info").innerHTML = `Info: El resultado ${resultado} es mayor que 200`;
     }
 };
 
